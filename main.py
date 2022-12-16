@@ -6,7 +6,7 @@ secret = "p32R8kNZQMjzIwpDGEnTtXiN6XY4SgN6"
 client_id = "1053258085394808842"
 redirect = "http://localhost:8080"
 API_ENDPOINT = 'https://canary.discord.com/api/v9'
-auth = "https://canary.discord.com/api/oauth2/authorize?client_id=1053258085394808842&redirect_uri=http%3A%2F%2Flocalhost%3A8080&response_type=code&scope=identify%20guilds.join"
+auth = "https://canary.discord.com/api/oauth2/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=identify%20guilds.join" % (client_id, redirect)
 guild = input("Guild ID: ")
 
 def exchange_code(code):
@@ -92,6 +92,7 @@ def main(tk):
             # print(r.json())
 
 f = open("boost-tokens.txt", "r").readlines()
+print("\n\n")
 for tk in f:
     tk = tk.strip()
     threading.Thread(target=main, args=(tk,)).start()
