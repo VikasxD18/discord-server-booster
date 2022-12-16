@@ -1,11 +1,13 @@
-import requests, threading
-tkn = "MTA1MjkzODU0NzUyODczNjc2OA.GPQFTK.IlWB1VBd5hQ14M0WsK9XHCvPujCgK_Xj0XWU2k"
-secret = "8VuZUW5SIP0OGXBCz9DCvzxz1T7B_NUy"
-client_id = "1052938547528736768"
-redirect = "https://localhost:8080"
+import requests, threading, os
+
+os.system("cls" if os.name == "nt" else "clear")
+tkn = "MTA1MzI1ODA4NTM5NDgwODg0Mg.GYFN6b.Vqtr3EvIki-7qbtb0glQvyIIPaVuI1np8z6nDI"
+secret = "p32R8kNZQMjzIwpDGEnTtXiN6XY4SgN6"
+client_id = "1053258085394808842"
+redirect = "http://localhost:8080"
 API_ENDPOINT = 'https://canary.discord.com/api/v9'
-auth = "https://canary.discord.com/api/oauth2/authorize?client_id=1052938547528736768&redirect_uri=https%3A%2F%2Flocalhost%3A8080&response_type=code&scope=identify%20guilds.join"
-guild = "872019984019247124"
+auth = "https://canary.discord.com/api/oauth2/authorize?client_id=1053258085394808842&redirect_uri=http%3A%2F%2Flocalhost%3A8080&response_type=code&scope=identify%20guilds.join"
+guild = input("Guild ID: ")
 
 def exchange_code(code):
   data = {
@@ -69,7 +71,7 @@ def main(tk):
         # print(r.json())
         location = r.json()['location']
         # print(location)
-        code = location.replace("https://localhost:8080?code=", "")
+        code = location.replace("http://localhost:8080?code=", "")
         # print(code)
         exchange = exchange_code(code)
         print("[+] Authorized Token")
