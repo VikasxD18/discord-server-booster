@@ -19,6 +19,7 @@ def exchange_code(code):
   }
   headers = {'Content-Type': 'application/x-www-form-urlencoded'}
   r = requests.post(str(API_ENDPOINT) + '/oauth2/token', data=data, headers=headers)
+  print(r.text)
 #   print(r.status_code)
   if r.status_code in (200, 201, 204):
     return r.json()
@@ -36,14 +37,24 @@ def add_to_guild(access_token, userID):
     "Authorization": f"Bot {botToken}",
     'Content-Type': 'application/json'
   }
-  r = requests.put(url=url, headers=headers, json=data)
+  while True:
+      r = requests.put(url=url, headers=headers, json=data)
+      if r.status_code in (200, 201, 204):
+         break
+      elif r.status_code == 429:
+         print("Sleeping For", r.json()['retry_after']
+         time.sleep(r.json()['retry_after'])
+         continue 
+      else:
+         print("Error", r.text)
+         break
 #   print(r.status_code)
   return r.status_code
 
 def get_headers(tk):
     headers = {
                 "accept": "*/*",
-                "accept-encoding": "gzip, deflate, br",
+               # "accept-encoding": "gzip, deflate, br",
                 "accept-language": "en-US",
                 "authorization": tk,
                 "referer": "https://discord.com/channels/@me",
